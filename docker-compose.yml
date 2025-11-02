@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  stress-detect:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./model:/app/model
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    shm_size: '2gb'

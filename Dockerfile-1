@@ -1,0 +1,19 @@
+FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-devel
+
+WORKDIR /app
+
+# Copy code & data
+COPY code/train.py /app/
+COPY data/train.csv /app/data/
+COPY data/test.csv /app/data/
+
+# Cài đúng phiên bản để tránh lỗi huggingface-hub, numpy
+RUN pip install --no-cache-dir \
+    numpy==1.23.5 \
+    huggingface-hub==0.19.4 \
+    transformers==4.36.0 \
+    pandas \
+    scikit-learn \
+    tqdm
+
+CMD ["python", "train.py"]
